@@ -1,0 +1,21 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+<linearGradient id="bg" x2="1" y2="1">
+<stop stop-color="#263746"/>
+<stop offset="1" stop-color="#090e16"/>
+</linearGradient>
+<linearGradient id="gold" x2="0" y2="1">
+<stop stop-color="#ffe5a0"/>
+<stop offset="1" stop-color="#ad8136"/>
+</linearGradient>
+</defs>
+<rect width="512" height="512" rx="110" fill="url(#bg)"/>
+<rect x="35" y="35" width="442" height="442" rx="85" fill="none" stroke="url(#gold)" stroke-width="7"/>
+<path d="M145 190 L115 105 L215 160 L256 85 L297 160 L397 105 L367 190 Z" fill="url(#gold)" stroke="#ffe5a0" stroke-width="8" stroke-linejoin="round"/>
+<rect x="140" y="195" width="232" height="24" rx="8" fill="url(#gold)"/>
+<rect x="165" y="235" width="182" height="120" rx="12" fill="none" stroke="url(#gold)" stroke-width="9"/>
+<circle cx="256" cy="295" r="37" fill="none" stroke="url(#gold)" stroke-width="8"/>
+<path d="M256 265 L265 286 L287 295 L265 304 L256 326 L247 304 L225 295 L247 286 Z" fill="url(#gold)"/>
+<text x="256" y="405" fill="#f3d58b" font-size="35" text-anchor="middle" font-family="serif" letter-spacing="5">ROYAL</text>
+</svg>
