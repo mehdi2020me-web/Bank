@@ -1,7 +1,7 @@
 
 {
   "name": "Royal Banknote Album",
-  "short_name": "Banknotes",
+  "short_name": "Royal Album",
   "description": "آلبوم سلطنتی کلکسیون اسکناس",
   "lang": "fa",
   "dir": "rtl",
@@ -13,10 +13,16 @@
   "theme_color": "#10151d",
   "icons": [
     {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
