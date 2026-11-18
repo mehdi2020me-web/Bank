@@ -1,0 +1,22 @@
+
+{
+  "name": "Royal Banknote Album",
+  "short_name": "Banknotes",
+  "description": "آلبوم سلطنتی کلکسیون اسکناس",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10151d",
+  "theme_color": "#10151d",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
