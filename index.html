@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10151d">
+<title>آلبوم سلطنتی اسکناس</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#10151d;color:#f5e8c5;font-family:Tahoma,Arial,sans-serif}
+header{text-align:center;padding:28px 15px;background:linear-gradient(135deg,#202c38,#10151d);border-bottom:2px solid #bd9b51}
+h1{color:#e6c477;margin:8px;font-size:25px}
+header p{color:#aaa;font-size:12px}
+main{max-width:650px;margin:auto;padding:16px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat,.panel,.note{background:#1b2631;border:1px solid #806a3c;border-radius:13px;padding:15px;margin-bottom:12px}
+.stat{text-align:center}
+.stat strong{display:block;color:#e6c477;font-size:23px;margin-top:8px}
+h2{font-size:17px;color:#e6c477}
+input,textarea,button{width:100%;padding:13px;margin:6px 0;border-radius:8px;border:1px solid #63583e;background:#101820;color:white;font-family:inherit}
+button{background:#a98742;color:#111;font-weight:bold;border:0;cursor:pointer}
+button.delete{background:#762f35;color:white}
+button.secondary{background:#344454;color:white}
+.note img{width:100%;max-height:210px;object-fit:contain;border-radius:8px;background:#111}
+.note h3{color:#e6c477}
+.details{font-size:13px;line-height:2;color:#ddd}
+.empty{text-align:center;color:#aaa;padding:25px}
+footer{text-align:center;color:#777;font-size:11px;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<div style="font-size:35px">♛</div>
+<h1>ROYAL BANKNOTE ALBUM</h1>
+<p>آلبوم اختصاصی و سلطنتی کلکسیون اسکناس</p>
+</header>
+
+<main>
+<div class="stats">
+<div class="stat">تعداد اسکناس‌ها<strong id="count">۰</strong></div>
+<div class="stat">کشورهای مجموعه<strong id="countries">۰</strong></div>
+</div>
+
+<section class="panel">
+<h2>✦ افزودن اسکناس جدید</h2>
+<input id="name" placeholder="نام اسکناس">
+<input id="country" placeholder="کشور">
+<input id="year" placeholder="سال انتشار">
+<input id="value" placeholder="ارزش اسمی و واحد پول">
+<input id="price" placeholder="ارزش کلکسیونی">
+<input id="condition" placeholder="وضعیت (نو، کارکرده، بانکی...)">
+<textarea id="description" placeholder="توضیحات و ویژگی‌های اسکناس"></textarea>
+<label>تصویر اسکناس:</label>
+<input id="photo" type="file" accept="image/*">
+<button onclick="addNote()">＋ ثبت در آلبوم</button>
+</section>
+
+<section class="panel">
+<h2>✦ گنجینه اسکناس‌های من</h2>
+<input id="search" placeholder="جستجو در مجموعه..." oninput="render()">
+<div id="list"></div>
+</section>
+</main>
+
+<footer>ROYAL COLLECTION • PRIVATE BANKNOTE MUSEUM</footer>
+
+<script>
+let notes=JSON.parse(localStorage.getItem('royalNotes')||'[]');
+
+function save(){
+localStorage.setItem('royalNotes',JSON.stringify(notes));
+render();
+}
+
+function addNote(){
+let name=document.getElementById('name').value.trim();
+let country=document.getElementById('country').value.trim();
+if(!name||!country){
+alert('نام اسکناس و کشور را وارد کن');
+return;
+}
+let file=document.getElementById('photo').files[0];
+let data={
+id:Date.now(),
+name,
+country,
+year:year.value,
+value:value.value,
+price:price.value,
+condition:condition.value,
+description:description.value,
+photo:''
+};
+function finish(){
+notes.unshift(data);
+save();
+['name','country','year','value','price','condition','description','photo'].forEach(id=>document.getElementById(id).value='');
+alert('اسکناس با موفقیت ثبت شد!');
+}
+if(file){
+let reader=new FileReader();
+reader.onload=e=>{data.photo=e.target.result;finish()};
+reader.readAsDataURL(file);
+}else finish();
+}
+
+function render(){
+let q=document.getElementById('search').value.toLowerCase();
+let filtered=notes.filter(n=>
+(n.name+' '+n.country+' '+n.year).toLowerCase().includes(q)
+);
+document.getElementById('count').innerText=notes.length;
+document.getElementById('countries').innerText=new Set(notes.map(n=>n.country)).size;
+let list=document.getElementById('list');
+if(!filtered.length){
+list.innerHTML='<div class="empty">هنوز اسکناسی ثبت نشده است ♛</div>';
+return;
+}
+list.innerHTML=filtered.map(n=>`
+<div class="note">
+${n.photo?`<img src="${n.photo}">`:''}
+<h3>♛ ${escapeHTML(n.name)}</h3>
+<div class="details">
+کشور: ${escapeHTML(n.country)}<br>
+سال انتشار: ${escapeHTML(n.year)}<br>
+ارزش اسمی: ${escapeHTML(n.value)}<br>
+ارزش کلکسیونی: ${escapeHTML(n.price)}<br>
+وضعیت: ${escapeHTML(n.condition)}<br>
+توضیحات: ${escapeHTML(n.description)}
+</div>
+<button class="delete" onclick="removeNote(${n.id})">حذف اسکناس</button>
+</div>`).join('');
+}
+
+function escapeHTML(s){
+return String(s||'').replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+}
+
+function removeNote(id){
+if(confirm('این اسکناس از آلبوم حذف شود؟')){
+notes=notes.filter(n=>n.id!==id);
+save();
+}
+}
+render();
+</script>
+</body>
+</html>
