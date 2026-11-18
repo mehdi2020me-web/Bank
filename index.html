@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10151d">
-<title>آلبوم سلطنتی اسکناس</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <title>آلبوم سلطنتی اسکناس</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#10151d;color:#f5e8c5;font-family:Tahoma,Arial,sans-serif}
@@ -147,5 +149,12 @@ save();
 }
 render();
 </script>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js');
+  });
+}
+  </script>
 </body>
 </html>
